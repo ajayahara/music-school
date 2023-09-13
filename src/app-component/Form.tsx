@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select"
 import {Form,FormControl,FormField,FormItem} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useContext } from "react"
+import { Context, ContextType } from "@/context/ContextApi"
 
 const formSchema = z.object({
     name: z.string(),
@@ -17,6 +19,7 @@ const formSchema = z.object({
 })
 
 export function CourseForm() {
+    const {updateCourses}=useContext(Context) as ContextType
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -29,10 +32,12 @@ export function CourseForm() {
         },
     })
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        const date=new Date();
+        updateCourses({...values,status:"open",students:0,id:date.getTime()})
     }
     return (
-        <div className="p-4 m-auto w-1/3 border-cyan-900">
+        <div className="p-8 m-auto ml-2 mr-2 shadow-sm">
+            <h2 className="text-2xl">Add Course</h2>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                     <FormField

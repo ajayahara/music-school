@@ -1,19 +1,50 @@
 
 import { CourseIf } from "@/InterFaces/Interface"
-import { Badge } from "@/components/ui/badge";
+import { DotsVerticalIcon } from "@radix-ui/react-icons"
 // shadcn.ui import
+import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
-interface CourseListProps {
-    data: CourseIf[];
-}
-export const CourseList: React.FC<CourseListProps> = ({ data }) => {
+import { useContext } from "react";
+import { Context, ContextType } from "@/context/ContextApi";
+export const CourseList = () => {
+    const { courses, statusUpdate } = useContext(Context) as ContextType
+    const handleClose = (id: number) => {
+        const modifiedCourses = courses.map((el) => {
+            if (el.id == id) {
+                return { ...el, status: "closed" }
+            } else {
+                return el
+            }
+        });
+        statusUpdate(modifiedCourses);
+    }
+    const handleArchive = (id: number) => {
+        const modifiedCourses = courses.map((el) => {
+            if (el.id == id) {
+                return { ...el, status: "archived" }
+            } else {
+                return el
+            }
+        });
+        statusUpdate(modifiedCourses);
+    }
+    const handleUnArchive = (id: number) => {
+        const modifiedCourses = courses.map((el) => {
+            if (el.id == id) {
+                return { ...el, status: "open" }
+            } else {
+                return el
+            }
+        });
+        statusUpdate(modifiedCourses);
+    }
     return (
-        <div>
+        <div className="p-8 m-auto ml-2 mr-2 shadow-sm">
+            <div className="mb-10 mt-3 text-2xl font-bold text-zinc-400">Courses</div>
             <div className="flex justify-between mb-1">
                 <h2 className="font-bold uppercase text-md text-zinc-400">Course List</h2>
-                <h2 className="text-pink-700 text-sm">View Course List</h2>
+                <h2 className="text-pink-700 text-sm">Search</h2>
             </div>
             <div className="p-3 bg-white shadow-lg">
                 <Table>
@@ -32,7 +63,7 @@ export const CourseList: React.FC<CourseListProps> = ({ data }) => {
                     </TableHeader>
                     <TableBody>
                         {
-                            data?.map((el: CourseIf, i: number) => {
+                            courses.map((el: CourseIf, i: number) => {
                                 return <TableRow key={i}>
                                     <TableCell>
                                         {el.name}
@@ -53,23 +84,26 @@ export const CourseList: React.FC<CourseListProps> = ({ data }) => {
                                         {el.students}
                                     </TableCell>
                                     <TableCell>
-                                        {el.price}
+                                        ${el.price}
                                     </TableCell>
                                     <TableCell>
-                                        {el.status==="open"?<Badge className="bg-green-300">Active</Badge>:null}
-                                        {el.status==="closed"?<Badge variant='destructive'>Closed</Badge>:null}
-                                        {el.status==="archived"?<Badge variant='secondary'>Archived</Badge>:null}
+                                        {el.status === "open" ? <Badge className="bg-green-300">Active</Badge> : null}
+                                        {el.status === "closed" ? <Badge variant='destructive' className="bg-red-200 text-gray-400">Closed</Badge> : null}
+                                        {el.status === "archived" ? <Badge variant='secondary'>Archived</Badge> : null}
                                     </TableCell>
                                     <TableCell>
                                         <Popover>
                                             <PopoverTrigger>
-                                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.625 2.5C8.625 3.12132 8.12132 3.625 7.5 3.625C6.87868 3.625 6.375 3.12132 6.375 2.5C6.375 1.87868 6.87868 1.375 7.5 1.375C8.12132 1.375 8.625 1.87868 8.625 2.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM7.5 13.625C8.12132 13.625 8.625 13.1213 8.625 12.5C8.625 11.8787 8.12132 11.375 7.5 11.375C6.87868 11.375 6.375 11.8787 6.375 12.5C6.375 13.1213 6.87868 13.625 7.5 13.625Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                                            {/* disabled={el.status==="closed"} */}
+                                                <DotsVerticalIcon />
                                             </PopoverTrigger>
                                             <PopoverContent>
                                                 <div className="flex flex-col gap-2 cursor-pointer">
-                                                    <span>Edit Course</span>
-                                                    <span>Archive Course</span>
-                                                    <span>Close Course</span>
+                                                    {el.status === 'archived' ? <span onClick={() => handleUnArchive(el.id)}>Unarchive Course</span> : <>
+                                                        <span>Edit Course</span>
+                                                        <span onClick={() => handleClose(el.id)}>Close Course</span>
+                                                        <span onClick={() => handleArchive(el.id)}>Archive Course</span>
+                                                    </>}
                                                 </div>
                                             </PopoverContent>
                                         </Popover>
