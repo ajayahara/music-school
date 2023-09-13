@@ -1,22 +1,10 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-
+// shadcn ui
 import { Button } from "@/components/ui/button"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-} from "@/components/ui/form"
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select"
+import {Form,FormControl,FormField,FormItem} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
@@ -36,12 +24,12 @@ export function CourseForm() {
             description: "",
             instructor: "",
             instrument: "",
-            day: "Sun",
+            day: "",
             price: 0,
         },
     })
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+        console.log(values)
     }
     return (
         <div className="p-4 m-auto w-1/3 border-cyan-900">
@@ -53,7 +41,7 @@ export function CourseForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Course Name" {...field} />
+                                    <Input placeholder="Course Name" type="text" {...field} />
                                 </FormControl>
                             </FormItem>
                         )}
@@ -64,7 +52,18 @@ export function CourseForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Description" {...field} />
+                                    <Input placeholder="Description" type="text" {...field} />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                     <FormField
+                        control={form.control}
+                        name="instructor"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input placeholder="Instructor" type="text" {...field} />
                                 </FormControl>
                             </FormItem>
                         )}
@@ -81,9 +80,11 @@ export function CourseForm() {
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                        <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                        <SelectItem value="m@support.com">m@support.com</SelectItem>
+                                        <SelectItem value="Piano">Piano</SelectItem>
+                                        <SelectItem value="Flute">Flute</SelectItem>
+                                        <SelectItem value="Tabla">Tabla</SelectItem>
+                                        <SelectItem value="Trumpet">Trumpet</SelectItem>
+                                        <SelectItem value="Xylophone">Xylophone</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormItem>
@@ -104,14 +105,29 @@ export function CourseForm() {
                                         <SelectItem value="Sunday">Sunday</SelectItem>
                                         <SelectItem value="Monday">Monday</SelectItem>
                                         <SelectItem value="Tuesday">Tuesday</SelectItem>
+                                        <SelectItem value="Wednessday">Wednessday</SelectItem>
+                                        <SelectItem value="Thursday">Tuesday</SelectItem>
+                                        <SelectItem value="Friday">Thursday</SelectItem>
+                                        <SelectItem value="Saturday">Saturday</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormItem>
                         )}
                     />
+                     <FormField
+                        control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input placeholder="Price" {...field} onChange={event => field.onChange(+event.target.value)}/>
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
                     <div className="flex justify-end">
-                        <Button type="submit" variant={'ghost'}>Cancel</Button>
-                        <Button type="submit" variant={'destructive'}>Submit</Button>
+                        <Button variant={'ghost'}>Cancel</Button>
+                        <Button type="submit" variant={'secondary'} className="bg-red-200">Add Course</Button>
                     </div>
                 </form>
             </Form>

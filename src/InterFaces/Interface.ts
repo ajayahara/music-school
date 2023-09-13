@@ -1,5 +1,5 @@
 export interface CourseIf {
-    id:string;
+    id:number;
    name:string;
    description:string;
    instructor:string;
@@ -10,16 +10,15 @@ export interface CourseIf {
    price:number
 }
 export interface StudentIf{
-    id:string;
-    regdNo:string;
-    firstName:string;
-    lastName:string;
-    courses:string;
-    totalFees:string;
-    regDate:string;
+   id:number;
+   firstName:string;
+   lastName:string;
+   email:string;
+   password:string;
+   courses:number;
+   totalfees:number
 }
 export interface EnrollIf{
-    id:string;
     enrNo:string;
     studentName:string;
     courseName:string;

@@ -1,0 +1,38 @@
+{
+    "students":[
+        {
+        "id":100099,
+        "firstName":"Ajaya",
+        "lastName":"Kumar",
+        "email":"abak00350@gmail.com",
+        "password":"abak00350",
+        "courses":0,
+        "totalfees":0
+        }
+    ]
+    ,
+    "courses":[
+        {
+            "id":12350,
+            "name":"Guitar Class",
+            "description":"Welcome to guitar class",
+            "instrument":"Guitar",
+            "instructor":"Akash Dwibedi",
+            "day":"Sunday",
+            "students":30,
+            "status":"closed",
+            "price":60
+        }
+
+    ]
+    ,
+    "enrollment":[
+        {
+            "enrNo":1234567,
+            "studentName":"Ajaya",
+            "courseName":"Guitar",
+            "fees":60,
+            "enrDate":"23-02-23"
+        }
+    ]
+}

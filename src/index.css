@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.app{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 10% 87%;
+  gap:3%;
+}
