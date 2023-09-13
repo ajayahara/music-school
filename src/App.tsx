@@ -1,14 +1,16 @@
 import { SideBar } from "./app-component/SideBar"
-import {Course} from "./pages/Course"
+import { Home } from "./pages/Home"
+import { RegistraitionForm } from "./pages/Registration"
 function App() {
   return (
     <>
-      <div className="app">
+      {/* <div className="app">
         <SideBar/>
         <div className="overflow-y-scroll h-screen">
-        <Course/>
+        <Home/>
         </div>
-      </div>
+      </div> */}
+      <RegistraitionForm/>
     </>
   )
 }
